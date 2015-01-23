@@ -1,9 +1,12 @@
 import datetime
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.contrib import admin
 
 # Create your models here.
 class Event(models.Model):
+    creator = models.ForeignKey(User, blank=True, null=True)
     title = models.CharField(max_length=200)
     subreddit = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
