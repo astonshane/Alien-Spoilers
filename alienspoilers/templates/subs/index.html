@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Alien Spoilers</title>
+    </head>
+
+    <body>
+
+      {% if user.is_authenticated %}
+        <h1>Alien Spoilers says... hello {{ user.username }}!</h1>
+      {% else %}
+        <h1>Alien Spoilers says... hello world!</h1>
+        <a href="/subs/register/">Register Here!</a><br />
+        <a href="/subs/login/">Login</a>
+      {% endif %}
+
+    </body>
+</html>
