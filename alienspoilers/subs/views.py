@@ -3,13 +3,27 @@ from django.http import HttpResponse, HttpResponseRedirect
 from subs.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+import praw
 
 # Create your views here.
 
 @login_required
 def index(request):
+    #if user hasn't linked their reddit account yet, send them to a page to do that...
+
+    #return render(request, 'subs/link_account')
+
     return render(request,
             'subs/index.html')
+
+@login_required
+def link_account(request):
+    #r = praw.Reddit('Alien Spoilers - astonshane@gmail.com - v0.0.1')
+    #r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+    #authorize_url = r.get_authorize_url('DifferentUniqueKey', refreshable=True)
+
+    return render(request, 'subs/link_account.html')
+
 
 def register(request):
 
@@ -115,3 +129,18 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/')
+
+
+
+
+
+
+@login_required
+def user_authorize_callback(request):
+    #callback logic here...
+    r = praw.Reddit('Alien Spoilers - astonshane@gmail.com - v0.0.1')
+    r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+    authorize_url = r.get_authorize_url('DifferentUniqueKey',
+                                       refreshable=True)
+
+    return render(request, 'subs/index.html', {'authorize_url': authorize_url})
