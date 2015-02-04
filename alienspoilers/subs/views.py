@@ -130,7 +130,8 @@ def link_account(request):
     #r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
     #authorize_url = r.get_authorize_url('DifferentUniqueKey', refreshable=True)
 
-    return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
+    #return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
+    return render(request, 'subs/link_account.html')
 
 
 @login_required
