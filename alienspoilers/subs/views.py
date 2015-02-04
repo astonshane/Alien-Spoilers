@@ -16,14 +16,6 @@ def index(request):
     return render(request,
             'subs/index.html')
 
-@login_required
-def link_account(request):
-    #r = praw.Reddit('Alien Spoilers - astonshane@gmail.com - v0.0.1')
-    #r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-    #authorize_url = r.get_authorize_url('DifferentUniqueKey', refreshable=True)
-
-    return render(request, 'subs/link_account.html')
-
 
 def register(request):
 
@@ -132,15 +124,18 @@ def user_logout(request):
 
 
 
+@login_required
+def link_account(request):
+    #r = praw.Reddit('Alien Spoilers - astonshane@gmail.com - v0.0.1')
+    #r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+    #authorize_url = r.get_authorize_url('DifferentUniqueKey', refreshable=True)
 
+    return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
 
 
 @login_required
 def user_authorize_callback(request):
     #callback logic here...
-    r = praw.Reddit('Alien Spoilers - astonshane@gmail.com - v0.0.1')
-    r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-    authorize_url = r.get_authorize_url('DifferentUniqueKey',
-                                       refreshable=True)
+    #collect the token / state / ...
 
-    return render(request, 'subs/index.html', {'authorize_url': authorize_url})
+    return render(request, 'subs/index.html')
