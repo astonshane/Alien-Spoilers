@@ -127,12 +127,21 @@ def user_logout(request):
 
 @login_required
 def link_account(request):
-    #r = praw.Reddit('Alien Spoilers - astonshane@gmail.com - v0.0.1')
-    #r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-    #authorize_url = r.get_authorize_url('DifferentUniqueKey', refreshable=True)
 
-    #return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
-    return render(request, 'subs/link_account.html')
+    #hacky hacky hacky. need to get this to work with built in PRAW config...
+    config = open("config.ini")
+    CLIENT_ID = config.readline().split()[1]
+    CLIENT_SECRET = config.readline().split()[1]
+    REDIRECT_URI = config.readline().split()[1]
+    config.close()
+
+    r = praw.Reddit('Alien Spoilers - astonshane@gmail.com - v0.0.1')
+    r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+    authorize_url = r.get_authorize_url('Alien Spoilers', refreshable=True)
+    #authorize_url = "http://www.shaneaston.com"
+
+    return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
+    #return render(request, 'subs/link_account.html')
 
 
 @login_required
