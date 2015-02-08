@@ -7,6 +7,10 @@
     <body>
         <h1>Login to Alien Spoilers</h1>
 
+        {% if invalid %}
+        <div style="color:#FF0000"> Invalid login details supplied. Try Again! </div>
+        {% endif %}
+
         <form id="login_form" method="post" action="/subs/login/">
             {% csrf_token %}
             Username: <input type="text" name="username" value="" size="50" />
