@@ -3,7 +3,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 from subs.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-import praw
+from uuid import uuid4
+import urllib
+
+
+#hacky hacky hacky. need to get this to work with built in PRAW config...
+config = open("config.ini")
+CLIENT_ID = config.readline().split()[1]
+CLIENT_SECRET = config.readline().split()[1]
+REDIRECT_URI = config.readline().split()[1]
+config.close()
+import requests
+import requests.auth
+
+
 
 # Create your views here.
 
@@ -124,29 +137,76 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 
+def user_agent():
+    '''reddit API clients should each have their own, unique user-agent
+    Ideally, with contact info included.
+
+    e.g.,
+    return "oauth2-sample-app by /u/%s" % your_reddit_username
+
+    '''
+    return "Alien Spoilers - astonshane@gmail.com - v0.0.2"
+
+def base_headers():
+    return {"User-Agent": user_agent()}
+
+def make_authorization_url():
+    # Generate a random string for the state parameter
+    state = str(uuid4())
+    params = {"client_id": CLIENT_ID,
+              "response_type": "code",
+              "state": state,
+              "redirect_uri": REDIRECT_URI,
+              "duration": "temporary",
+              "scope": "identity"}
+    url = "https://ssl.reddit.com/api/v1/authorize?" + urllib.urlencode(params)
+    return url
 
 @login_required
 def link_account(request):
 
-    #hacky hacky hacky. need to get this to work with built in PRAW config...
-    config = open("config.ini")
-    CLIENT_ID = config.readline().split()[1]
-    CLIENT_SECRET = config.readline().split()[1]
-    REDIRECT_URI = config.readline().split()[1]
-    config.close()
-
-    r = praw.Reddit('Alien Spoilers - astonshane@gmail.com - v0.0.1')
-    r.set_oauth_app_info(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-    authorize_url = r.get_authorize_url('Alien Spoilers', refreshable=True)
-    #authorize_url = "http://www.shaneaston.com"
+    authorize_url = make_authorization_url()
 
     return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
-    #return render(request, 'subs/link_account.html')
+
+
+def get_token(code):
+    client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
+    post_data = {"grant_type": "authorization_code",
+                 "code": code,
+                 "redirect_uri": REDIRECT_URI}
+    headers = base_headers()
+    response = requests.post("https://ssl.reddit.com/api/v1/access_token",
+                             auth=client_auth,
+                             headers=headers,
+                             data=post_data)
+    token_json = response.json()
+    return token_json["access_token"]
+
+
+def get_username(access_token):
+    headers = base_headers()
+    headers.update({"Authorization": "bearer " + access_token})
+    response = requests.get("https://oauth.reddit.com/api/v1/me", headers=headers)
+    me_json = response.json()
+    return me_json['name']
+
+
 
 
 @login_required
 def user_authorize_callback(request):
-    #callback logic here...
-    #collect the token / state / ...
 
-    return render(request, 'subs/index.html')
+    error = request.GET.get('error', '')
+    if error:
+        return "Error: " + error
+
+    state = request.GET.get('state', '')
+    code = request.GET.get('code')
+    access_token = get_token(code)
+    user_name = get_username(access_token)
+
+
+
+
+    return render(request, 'subs/index.html', {'user_name': user_name})
