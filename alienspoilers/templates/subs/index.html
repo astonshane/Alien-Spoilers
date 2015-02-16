@@ -11,6 +11,8 @@
 
         {% if user_name %}
           <p>Your reddit account name is: {{user_name}} </p>
+        {% else %}
+          <p> Link Your reddit account <a href={{link_url}}>here</a> </p>
         {% endif %}
 
     </body>

@@ -27,7 +27,7 @@ def index(request):
     #return render(request, 'subs/link_account')
 
     return render(request,
-            'subs/index.html')
+            'subs/index.html', {'link_url': make_authorization_url()})
 
 
 def register(request):
