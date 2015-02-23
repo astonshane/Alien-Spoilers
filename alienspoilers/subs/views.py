@@ -158,7 +158,7 @@ def make_authorization_url():
               "state": state,
               "redirect_uri": REDIRECT_URI,
               "duration": "temporary",
-              "scope": "identity"}
+              "scope": "identity,mysubreddits"}
     url = "https://ssl.reddit.com/api/v1/authorize?" + urllib.urlencode(params)
     return url
 
@@ -189,9 +189,35 @@ def get_username(access_token):
     headers.update({"Authorization": "bearer " + access_token})
     response = requests.get("https://oauth.reddit.com/api/v1/me", headers=headers)
     me_json = response.json()
+    #print me_json
     return me_json['name']
 
+def get_my_subreddits(access_token):
+    headers = base_headers()
+    headers.update({"Authorization": "bearer " + access_token})
+    response = requests.get("https://oauth.reddit.com/subreddits/mine/subscriber?limit=100", headers=headers)
+    dump = response.json()
 
+    #print my_subreddits
+
+    data = dump['data']
+
+    all_subreddits = data['children']
+
+    #dictionary
+    my_subreddits = {}
+
+    for subreddit in all_subreddits:
+        data = subreddit['data']
+        display_name = data['display_name']
+        url = data['url']
+
+
+        #                gets rid of the u' thing
+        name = url.encode('utf-8')
+        my_subreddits[name] = "http://www.reddit.com" + name
+
+    return my_subreddits
 
 
 @login_required
@@ -205,8 +231,11 @@ def user_authorize_callback(request):
     code = request.GET.get('code')
     access_token = get_token(code)
     user_name = get_username(access_token)
+    my_subreddits = get_my_subreddits(access_token)
+    print my_subreddits
 
 
 
 
-    return render(request, 'subs/index.html', {'user_name': user_name})
+
+    return render(request, 'subs/index.html', {'user_name': user_name, 'my_subreddits': my_subreddits})
