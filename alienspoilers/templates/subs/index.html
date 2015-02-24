@@ -12,8 +12,7 @@
         {% if user_name %}
           <p>Your reddit account name is: {{user_name}} </p>
           {% for subreddit in my_subreddits %}
-            <a href="http://www.reddit.com{{subreddit}}"> {{subreddit}} </a> <br />
-
+            <a href={{subbreddit.url}}> {{subreddit.name}} </a><br/>
           {% endfor %}
 
         {% else %}

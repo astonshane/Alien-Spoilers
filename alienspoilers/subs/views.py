@@ -6,6 +6,14 @@ from django.contrib.auth.decorators import login_required
 from uuid import uuid4
 import urllib
 
+class Subreddit:
+    def __init__(self, name):
+        self.name = name
+        self.url = "http://www.reddit.com" + name
+
+    def __str__(self):
+        print self.name
+
 
 #hacky hacky hacky. need to get this to work with built in PRAW config...
 config = open("config.ini")
@@ -205,17 +213,17 @@ def get_my_subreddits(access_token):
     all_subreddits = data['children']
 
     #dictionary
-    my_subreddits = {}
+    my_subreddits = []
 
     for subreddit in all_subreddits:
         data = subreddit['data']
         display_name = data['display_name']
         url = data['url']
-
-
         #                gets rid of the u' thing
         name = url.encode('utf-8')
-        my_subreddits[name] = "http://www.reddit.com" + name
+
+        sub = Subreddit(name)
+        my_subreddits.append(sub)
 
     return my_subreddits
 
@@ -232,10 +240,5 @@ def user_authorize_callback(request):
     access_token = get_token(code)
     user_name = get_username(access_token)
     my_subreddits = get_my_subreddits(access_token)
-    print my_subreddits
-
-
-
-
 
     return render(request, 'subs/index.html', {'user_name': user_name, 'my_subreddits': my_subreddits})
