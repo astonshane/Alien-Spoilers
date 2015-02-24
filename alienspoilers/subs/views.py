@@ -37,12 +37,11 @@ import requests.auth
 @login_required
 def index(request):
     #if user hasn't linked their reddit account yet, send them to a page to do that...
-
-    #return render(request, 'subs/link_account')
-
-    return render(request,
-            'subs/index.html', {'link_url': make_authorization_url()})
-
+    profile = request.user.profile
+    if profile.reddit_linked:
+        return index_render(request)
+    else:
+        return render(request, 'subs/index.html', {'link_url': make_authorization_url()})
 
 def register(request):
 
@@ -185,6 +184,7 @@ def link_account(request):
 
 
 def get_initial_token(request, code):
+    print "getting initial token"
     client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
     post_data = {"grant_type": "authorization_code",
                  "code": code,
@@ -201,6 +201,28 @@ def get_initial_token(request, code):
     profile.access_token = token_json["access_token"]
     profile.refresh_token = token_json["refresh_token"]
     profile.reddit_linked = True
+    profile.token_expiry = timezone.now() + datetime.timedelta(hours=1)
+    profile.save()
+
+    return token_json["access_token"]
+
+def refresh_token(request):
+    print "refreshing token"
+    client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
+    post_data = {"grant_type": "refresh_token",
+                 "code": code,
+                 "redirect_uri": REDIRECT_URI}
+    headers = base_headers()
+    response = requests.post("https://ssl.reddit.com/api/v1/access_token",
+                             auth=client_auth,
+                             headers=headers,
+                             data=post_data)
+    token_json = response.json()
+
+    #update the UserProfile data model with the new data
+    profile = request.user.profile
+    profile.access_token = token_json["access_token"]
+    profile.refresh_token = token_json["refresh_token"]
     profile.token_expiry = timezone.now() + datetime.timedelta(hours=1)
     profile.save()
 
@@ -263,6 +285,15 @@ def subscribe(access_token, fullname):
     dump = response.json()
     #print dump
 
+def index_render(request):
+    profile = request.user.profile
+    if(timezone.now() >= profile.token_expiry):
+        refresh_token(request)
+
+    user_name = get_username(profile.access_token)
+    my_subreddits = get_my_subreddits(profile.access_token)
+
+    return render(request, 'subs/index.html', {'user_name': user_name, 'my_subreddits': my_subreddits})
 
 @login_required
 def user_authorize_callback(request):
@@ -274,11 +305,6 @@ def user_authorize_callback(request):
     state = request.GET.get('state', '')
     code = request.GET.get('code')
 
-    access_token = get_initial_token(request, code)
+    get_initial_token(request, code)
 
-    user_name = get_username(access_token)
-    my_subreddits = get_my_subreddits(access_token)
-
-    #subscribe(access_token, "t5_2qmg3") #/r/nfl
-
-    return render(request, 'subs/index.html', {'user_name': user_name, 'my_subreddits': my_subreddits})
+    return index_render(request)
