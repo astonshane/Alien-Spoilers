@@ -6,7 +6,7 @@ from django.contrib import admin
 
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name="profile")
 
     # The additional attributes we wish to include.
     refresh_token = models.CharField(max_length=200, null=True)

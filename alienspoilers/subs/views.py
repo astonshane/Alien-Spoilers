@@ -4,6 +4,9 @@ from subs.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from uuid import uuid4
+from django.contrib.auth.models import User
+from subs.models import UserProfile
+
 import urllib
 
 class Subreddit:
@@ -166,7 +169,7 @@ def make_authorization_url():
               "response_type": "code",
               "state": state,
               "redirect_uri": REDIRECT_URI,
-              "duration": "temporary",
+              "duration": "permanent",
               "scope": "identity,mysubreddits,subscribe"}
     url = "https://ssl.reddit.com/api/v1/authorize?" + urllib.urlencode(params)
     return url
@@ -190,7 +193,7 @@ def get_token(code):
                              headers=headers,
                              data=post_data)
     token_json = response.json()
-    return token_json["access_token"]
+    return token_json["access_token"], token_json["refresh_token"]
 
 
 def get_username(access_token):
@@ -260,7 +263,17 @@ def user_authorize_callback(request):
 
     state = request.GET.get('state', '')
     code = request.GET.get('code')
-    access_token = get_token(code)
+
+    access_token, refresh_token = get_token(code)
+
+    #update the UserProfile data model with the new data
+    profile = request.user.profile
+    profile.access_token = access_token
+    profile.refresh_token = refresh_token
+    profile.reddit_linked = True
+    profile.save()
+
+
     user_name = get_username(access_token)
     my_subreddits = get_my_subreddits(access_token)
 
