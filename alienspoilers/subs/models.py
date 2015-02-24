@@ -11,6 +11,7 @@ class UserProfile(models.Model):
     # The additional attributes we wish to include.
     refresh_token = models.CharField(max_length=200, null=True)
     access_token = models.CharField(max_length=200, null=True)
+    token_expiry = models.DateTimeField('token expiry', null=True)
     reddit_linked = models.BooleanField(default=False)
 
     # Override the __unicode__() method to return out something meaningful!
