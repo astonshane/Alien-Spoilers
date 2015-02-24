@@ -210,7 +210,7 @@ def refresh_token(request):
     print "refreshing token"
     client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
     post_data = {"grant_type": "refresh_token",
-                 "code": code,
+                 "refresh_token": request.user.profile.refresh_token,
                  "redirect_uri": REDIRECT_URI}
     headers = base_headers()
     response = requests.post("https://ssl.reddit.com/api/v1/access_token",
@@ -222,11 +222,11 @@ def refresh_token(request):
     #update the UserProfile data model with the new data
     profile = request.user.profile
     profile.access_token = token_json["access_token"]
-    profile.refresh_token = token_json["refresh_token"]
+    #profile.refresh_token = token_json["refresh_token"]
     profile.token_expiry = timezone.now() + datetime.timedelta(hours=1)
     profile.save()
 
-    return token_json["access_token"]
+    #return token_json["access_token"]
 
 def get_username(access_token):
     headers = base_headers()
