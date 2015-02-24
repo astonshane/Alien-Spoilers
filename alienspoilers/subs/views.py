@@ -7,8 +7,9 @@ from uuid import uuid4
 import urllib
 
 class Subreddit:
-    def __init__(self, name):
+    def __init__(self, name, fullname):
         self.name = name
+        self.fullname = fullname
         self.url = "http://www.reddit.com" + name
 
     def __str__(self):
@@ -166,7 +167,7 @@ def make_authorization_url():
               "state": state,
               "redirect_uri": REDIRECT_URI,
               "duration": "temporary",
-              "scope": "identity,mysubreddits"}
+              "scope": "identity,mysubreddits,subscribe"}
     url = "https://ssl.reddit.com/api/v1/authorize?" + urllib.urlencode(params)
     return url
 
@@ -217,15 +218,37 @@ def get_my_subreddits(access_token):
 
     for subreddit in all_subreddits:
         data = subreddit['data']
-        display_name = data['display_name']
+        fullname = data['name']
         url = data['url']
         #                gets rid of the u' thing
         name = url.encode('utf-8')
 
-        sub = Subreddit(name)
+        #print name, fullname
+
+        sub = Subreddit(name, fullname)
         my_subreddits.append(sub)
 
     return my_subreddits
+
+def unsubscribe(access_token, sub):
+    headers = base_headers()
+    headers.update({"Authorization": "bearer " + access_token})
+    headers.update({"Content-Type": "application/json"})
+    rqst = "https://oauth.reddit.com/api/subscribe?action=unsub&sr=" + sub.fullname
+    #print rqst
+    response = requests.post(rqst, headers=headers)
+    dump = response.json()
+    #print dump
+
+def subscribe(access_token, sub):
+    headers = base_headers()
+    headers.update({"Authorization": "bearer " + access_token})
+    headers.update({"Content-Type": "application/json"})
+    rqst = "https://oauth.reddit.com/api/subscribe?action=sub&sr=" + sub.fullname
+    #print rqst
+    response = requests.post(rqst, headers=headers)
+    dump = response.json()
+    #print dump
 
 
 @login_required
@@ -240,5 +263,8 @@ def user_authorize_callback(request):
     access_token = get_token(code)
     user_name = get_username(access_token)
     my_subreddits = get_my_subreddits(access_token)
+
+    test = Subreddit("/r/nfl", "t5_2qmg3")
+    subscribe(access_token, test)
 
     return render(request, 'subs/index.html', {'user_name': user_name, 'my_subreddits': my_subreddits})
