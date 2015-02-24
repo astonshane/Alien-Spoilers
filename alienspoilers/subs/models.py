@@ -9,7 +9,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     # The additional attributes we wish to include.
-    reddit_refresh_token = models.CharField(max_length=200, null=True)
+    refresh_token = models.CharField(max_length=200, null=True)
+    access_token = models.CharField(max_length=200, null=True)
     reddit_linked = models.BooleanField(default=False)
 
     # Override the __unicode__() method to return out something meaningful!

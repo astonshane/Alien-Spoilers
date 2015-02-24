@@ -230,21 +230,21 @@ def get_my_subreddits(access_token):
 
     return my_subreddits
 
-def unsubscribe(access_token, sub):
+def unsubscribe(access_token, fullname):
     headers = base_headers()
     headers.update({"Authorization": "bearer " + access_token})
     headers.update({"Content-Type": "application/json"})
-    rqst = "https://oauth.reddit.com/api/subscribe?action=unsub&sr=" + sub.fullname
+    rqst = "https://oauth.reddit.com/api/subscribe?action=unsub&sr=" + fullname
     #print rqst
     response = requests.post(rqst, headers=headers)
     dump = response.json()
     #print dump
 
-def subscribe(access_token, sub):
+def subscribe(access_token, fullname):
     headers = base_headers()
     headers.update({"Authorization": "bearer " + access_token})
     headers.update({"Content-Type": "application/json"})
-    rqst = "https://oauth.reddit.com/api/subscribe?action=sub&sr=" + sub.fullname
+    rqst = "https://oauth.reddit.com/api/subscribe?action=sub&sr=" + fullname
     #print rqst
     response = requests.post(rqst, headers=headers)
     dump = response.json()
@@ -264,7 +264,6 @@ def user_authorize_callback(request):
     user_name = get_username(access_token)
     my_subreddits = get_my_subreddits(access_token)
 
-    test = Subreddit("/r/nfl", "t5_2qmg3")
-    subscribe(access_token, test)
+    #subscribe(access_token, "t5_2qmg3") #/r/nfl
 
     return render(request, 'subs/index.html', {'user_name': user_name, 'my_subreddits': my_subreddits})
