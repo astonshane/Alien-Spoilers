@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from uuid import uuid4
 from django.contrib.auth.models import User
 from subs.models import UserProfile
+from django.utils import timezone
+import datetime
 
 import urllib
 
@@ -182,7 +184,7 @@ def link_account(request):
     return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
 
 
-def get_token(code):
+def get_initial_token(request, code):
     client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
     post_data = {"grant_type": "authorization_code",
                  "code": code,
@@ -193,8 +195,16 @@ def get_token(code):
                              headers=headers,
                              data=post_data)
     token_json = response.json()
-    return token_json["access_token"], token_json["refresh_token"]
 
+    #update the UserProfile data model with the new data
+    profile = request.user.profile
+    profile.access_token = token_json["access_token"]
+    profile.refresh_token = token_json["refresh_token"]
+    profile.reddit_linked = True
+    profile.token_expiry = timezone.now() + datetime.timedelta(hours=1)
+    profile.save()
+
+    return token_json["access_token"]
 
 def get_username(access_token):
     headers = base_headers()
@@ -264,15 +274,7 @@ def user_authorize_callback(request):
     state = request.GET.get('state', '')
     code = request.GET.get('code')
 
-    access_token, refresh_token = get_token(code)
-
-    #update the UserProfile data model with the new data
-    profile = request.user.profile
-    profile.access_token = access_token
-    profile.refresh_token = refresh_token
-    profile.reddit_linked = True
-    profile.save()
-
+    access_token = get_initial_token(request, code)
 
     user_name = get_username(access_token)
     my_subreddits = get_my_subreddits(access_token)
