@@ -10,8 +10,15 @@ from django.utils import timezone
 import datetime
 import urllib
 import requests
+import ConfigParser
 from subreddit import Subreddit
 
+#parse the config file to get the oauth client id/secret
+Config = ConfigParser.ConfigParser()
+Config.read("config.ini")
+CLIENT_ID = Config.get("reddit", "oauth_client_id")
+CLIENT_SECRET = Config.get("reddit", "ouath_client_secret")
+REDIRECT_URI = Config.get("reddit", "oauth_redirect_uri")
 
 def user_agent():
     '''

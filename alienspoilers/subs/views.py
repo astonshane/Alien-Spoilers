@@ -9,19 +9,16 @@ from subs.models import UserProfile
 from django.utils import timezone
 import datetime
 import urllib
+import ConfigParser
 from subreddit import Subreddit
 from oauthHelpers import *
 
-
-#hacky hacky hacky. need to get this to work with built in PRAW config...
-config = open("config.ini")
-CLIENT_ID = config.readline().split()[1]
-CLIENT_SECRET = config.readline().split()[1]
-REDIRECT_URI = config.readline().split()[1]
-config.close()
-import requests
-import requests.auth
-
+#parse the config file to get the oauth client id/secret
+Config = ConfigParser.ConfigParser()
+Config.read("config.ini")
+CLIENT_ID = Config.get("reddit", "oauth_client_id")
+CLIENT_SECRET = Config.get("reddit", "ouath_client_secret")
+REDIRECT_URI = Config.get("reddit", "oauth_redirect_uri")
 
 @login_required
 def index(request):
@@ -33,7 +30,6 @@ def index(request):
         return render(request, 'subs/index.html', {'link_url': make_authorization_url()})
 
 def register(request):
-
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
     registered = False
@@ -85,8 +81,6 @@ def register(request):
             'subs/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
-
-
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
@@ -125,9 +119,6 @@ def user_login(request):
         # blank dictionary object...
         return render(request, 'subs/login.html', {'invalid':False})
 
-
-
-
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
 def user_logout(request):
@@ -137,16 +128,11 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/')
 
-
-
-
+#not used?
 @login_required
 def link_account(request):
-
     authorize_url = make_authorization_url()
-
     return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
-
 
 @login_required
 def user_authorize_callback(request):
