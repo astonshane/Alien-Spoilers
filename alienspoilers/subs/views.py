@@ -19,6 +19,7 @@ class Subreddit:
 
     def __str__(self):
         print self.name
+        
 
 
 #hacky hacky hacky. need to get this to work with built in PRAW config...
