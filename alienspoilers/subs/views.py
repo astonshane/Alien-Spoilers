@@ -12,6 +12,7 @@ import urllib
 import ConfigParser
 from subreddit import Subreddit
 from oauthHelpers import *
+import praw
 
 #parse the config file to get the oauth client id/secret
 Config = ConfigParser.ConfigParser()
@@ -163,10 +164,18 @@ def create_event(request):
         if event_form.is_valid():
             # Save the user's form data to the database.
             event = event_form.save(commit=False)
-            print event
+
             event.creator = request.user
             event.pub_date = timezone.now()
-            print event
+
+            r = praw.Reddit(user_agent())
+            sr = event.subreddit.replace("/r/","")
+            #print sr
+            x = r.get_subreddit(sr, fetch=True)
+            #print x.fullname.encode('utf-8')
+            event.subreddit_fullname = x.fullname.encode('utf-8')
+
+            #save the form
             event.save()
 
             # Update our variable to tell the template the event creation was successful.
