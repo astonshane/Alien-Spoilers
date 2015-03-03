@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from subs.forms import UserForm, UserProfileForm
+from subs.forms import UserForm, UserProfileForm, CreateEventForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from uuid import uuid4
@@ -147,3 +147,43 @@ def user_authorize_callback(request):
     get_initial_token(request, code)
 
     return index_render(request)
+
+@login_required
+def create_event(request):
+    # A boolean value for telling the template whether the registration was successful.
+    # Set to False initially. Code changes value to True when registration succeeds.
+    created = False
+
+    # If it's a HTTP POST, we're interested in processing form data.
+    if request.method == 'POST':
+        # Attempt to grab information from the raw form information.
+        event_form = CreateEventForm(data=request.POST)
+
+        # If the for is valid...
+        if event_form.is_valid():
+            # Save the user's form data to the database.
+            event = event_form.save(commit=False)
+            print event
+            event.creator = request.user
+            event.pub_date = timezone.now()
+            print event
+            event.save()
+
+            # Update our variable to tell the template the event creation was successful.
+            created = True
+
+        # Invalid form?
+        # Print problems to the terminal.
+        # They'll also be shown to the user.
+        else:
+            print event_form.errors
+
+    # Not a HTTP POST, so we render our form using two ModelForm instances.
+    # These forms will be blank, ready for user input.
+    else:
+        event_form = CreateEventForm()
+
+    # Render the template depending on the context.
+    return render(request,
+            'subs/create_event.html',
+            {'event_form': event_form, 'created': created} )
