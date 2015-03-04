@@ -33,6 +33,7 @@ def base_headers():
 def make_authorization_url():
     # Generate a random string for the state parameter
     state = str(uuid4())
+    print REDIRECT_URI
     params = {"client_id": CLIENT_ID,
               "response_type": "code",
               "state": state,

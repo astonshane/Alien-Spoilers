@@ -1,3 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Login to Alien Spoilers{% endblock %}
+
+{% block content %}
+  <h2>Login to Alien Spoilers</h2>
+
+  {% if invalid %}
+    <div style="color:#FF0000"> Invalid login details supplied. Try Again! </div>
+  {% endif %}
+
+  <form id="login_form" method="post" action="/subs/login/">
+      {% csrf_token %}
+      Username: <input type="text" name="username" value="" size="50" />
+      <br />
+      Password: <input type="password" name="password" value="" size="50" />
+      <br />
+
+      <input type="submit" value="submit" />
+  </form>
+{% endblock %}
+
+<!--
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,3 +46,4 @@
 
     </body>
 </html>
+-->

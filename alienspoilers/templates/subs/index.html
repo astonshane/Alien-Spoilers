@@ -1,3 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Alien Spoilers{% endblock %}
+
+{% block content %}
+  <h2>Hello {{ user.username }}!</h2>
+
+  {% if user_name %}
+    <p>Your reddit account name is: {{user_name}} </p>
+    {% for subreddit in my_subreddits %}
+      <a href={{subreddit.url}}> {{subreddit.name}} </a><br/>
+    {% endfor %}
+
+  {% else %}
+    <p> Link Your reddit account <a href={{link_url}}>here</a> </p>
+  {% endif %}
+{% endblock %}
+
+
+<!--
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,7 +25,6 @@
     </head>
 
     <body>
-        <!-- we can do this because this page requires you to be logged in -->
         <h1>Alien Spoilers says... hello {{ user.username }}!</h1>
         <a href="/subs/logout/">Logout</a><br />
 
@@ -21,3 +40,4 @@
 
     </body>
 </html>
+-->
