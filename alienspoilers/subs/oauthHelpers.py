@@ -145,12 +145,3 @@ def subscribe(access_token, fullname):
     response = requests.post(rqst, headers=headers)
     dump = response.json()
     #print dump
-
-def index_render(request):
-    profile = request.user.profile
-    if(timezone.now() >= profile.token_expiry):
-        refresh_token(request)
-    user_name = get_username(profile.access_token)
-    my_subreddits = get_my_subreddits(profile.access_token)
-
-    return render(request, 'subs/index.html', {'user_name': user_name, 'my_subreddits': my_subreddits})

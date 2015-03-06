@@ -12,6 +12,7 @@ import urllib
 import ConfigParser
 from subreddit import Subreddit
 from oauthHelpers import *
+from renderings import *
 import praw
 
 #parse the config file to get the oauth client id/secret
@@ -23,12 +24,30 @@ REDIRECT_URI = Config.get("reddit", "oauth_redirect_uri")
 
 @login_required
 def index(request):
-    #if user hasn't linked their reddit account yet, send them to a page to do that...
     profile = request.user.profile
     if profile.reddit_linked:
         return index_render(request)
     else:
-        return render(request, 'subs/index.html', {'link_url': make_authorization_url()})
+        #if user hasn't linked their reddit account yet, send them to a page to do that...
+        return render(request, 'subs/link_account.html', {'link_url': make_authorization_url()})
+
+@login_required
+def my_subreddits(request):
+    profile = request.user.profile
+    if profile.reddit_linked:
+        return my_subreddits_render(request)
+    else:
+        #if user hasn't linked their reddit account yet, send them to a page to do that...
+        return render(request, 'subs/link_account.html', {'link_url': make_authorization_url()})
+
+@login_required
+def link_account(request):
+    profile = request.user.profile
+    if profile.reddit_linked:
+        return index_render(request)
+    else:
+        return index_render(request)
+
 
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
@@ -128,12 +147,6 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/')
-
-#not used?
-@login_required
-def link_account(request):
-    authorize_url = make_authorization_url()
-    return render(request, 'subs/link_account.html', {'authorize_url': authorize_url})
 
 @login_required
 def user_authorize_callback(request):

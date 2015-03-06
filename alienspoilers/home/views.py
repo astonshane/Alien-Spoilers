@@ -20,6 +20,7 @@ sys.path.append(os.path.abspath(scriptpath))
 
 # Do the import
 from oauthHelpers import *
+from renderings import *
 
 # Create your views here.
 
