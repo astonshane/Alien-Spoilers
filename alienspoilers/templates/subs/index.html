@@ -43,31 +43,12 @@
   {% endfor %}
   </table>
 
+  <p>
+    Create a new event <a href="/subs/create_event">here</a>!
+  </p>
+
+  <p>
+    View all of your Reddit Subscriptions <a href="/subs/my_subreddits">here</a>!
+  </p>
 
 {% endblock %}
-
-
-<!--
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Alien Spoilers</title>
-    </head>
-
-    <body>
-        <h1>Alien Spoilers says... hello {{ user.username }}!</h1>
-        <a href="/subs/logout/">Logout</a><br />
-
-        {% if user_name %}
-          <p>Your reddit account name is: {{user_name}} </p>
-          {% for subreddit in my_subreddits %}
-            <a href={{subreddit.url}}> {{subreddit.name}} </a><br/>
-          {% endfor %}
-
-        {% else %}
-          <p> Link Your reddit account <a href={{link_url}}>here</a> </p>
-        {% endif %}
-
-    </body>
-</html>
--->

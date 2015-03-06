@@ -6,34 +6,10 @@
   <h2>Hello {{ user.username }}!</h2>
 
   <p>Your reddit account name is: {{user_name}} </p>
+  <ul style="list-style-type:disc">
   {% for subreddit in my_subreddits %}
-    <a href={{subreddit.url}}> {{subreddit.name}} </a><br/>
+    <li><a href={{subreddit.url}}> {{subreddit.name}} </a></li>
   {% endfor %}
+  </ul>
 
 {% endblock %}
-
-
-<!--
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Alien Spoilers</title>
-    </head>
-
-    <body>
-        <h1>Alien Spoilers says... hello {{ user.username }}!</h1>
-        <a href="/subs/logout/">Logout</a><br />
-
-        {% if user_name %}
-          <p>Your reddit account name is: {{user_name}} </p>
-          {% for subreddit in my_subreddits %}
-            <a href={{subreddit.url}}> {{subreddit.name}} </a><br/>
-          {% endfor %}
-
-        {% else %}
-          <p> Link Your reddit account <a href={{link_url}}>here</a> </p>
-        {% endif %}
-
-    </body>
-</html>
--->
