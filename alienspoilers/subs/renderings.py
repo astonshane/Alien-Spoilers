@@ -22,7 +22,7 @@ def my_subreddits_render(request):
     profile = request.user.profile
 
     if(timezone.now() >= profile.token_expiry):
-        refresh_token(request)
+        refresh_token(profile)
     user_name = get_username(profile.access_token)
     my_subreddits = get_my_subreddits(profile.access_token)
 

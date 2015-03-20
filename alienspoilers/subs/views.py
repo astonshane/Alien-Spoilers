@@ -122,6 +122,8 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
+                #run checks upon login to see if the user has any events current events:
+                checkEvents(user)
                 return HttpResponseRedirect('/subs/')
             else:
                 # An inactive account was used - no logging in!
