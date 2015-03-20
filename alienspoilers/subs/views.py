@@ -186,15 +186,22 @@ def create_event(request):
             r = praw.Reddit(user_agent())
             sr = event.subreddit.replace("/r/","")
             #print sr
-            x = r.get_subreddit(sr, fetch=True)
-            #print x.fullname.encode('utf-8')
-            event.subreddit_fullname = x.fullname.encode('utf-8')
+            try:
+                x = r.get_subreddit(sr, fetch=True)
+                event.subreddit_fullname = x.fullname.encode('utf-8')
 
-            #save the form
-            event.save()
+                #save the form
+                event.save()
 
-            # Update our variable to tell the template the event creation was successful.
-            created = True
+                # Update our variable to tell the template the event creation was successful.
+                created = True
+            except:
+                #the subreddit lookup failed...
+                #   display an error message
+                print "invalid subreddit entered"
+                event_form = CreateEventForm()
+                return render(request, 'subs/create_event.html',
+                    {'event_form': event_form, 'created': created, 'invalid': True})
 
         # Invalid form?
         # Print problems to the terminal.

@@ -4,12 +4,15 @@
 
 {% block content %}
   <h2>Create an Event</h2>
-  
+
   {% if created %}
     Alien Spoilers says: <strong>thank you for creating an event!</strong>
     <a href="/">Return to the homepage.</a><br />
   {% else %}
     Alien Spoilers says: <strong>create an event here!</strong><br />
+    {% if invalid %}
+      <div style="color:#FF0000"> Invalid subreddit name entered. Try Again! </div>
+    {% endif %}
 
     <form id="event_form" method="post" action="/subs/create_event/"
           enctype="multipart/form-data">
