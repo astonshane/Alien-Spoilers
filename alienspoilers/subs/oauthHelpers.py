@@ -147,7 +147,7 @@ def subscribe(access_token, fullname):
     #print dump
 
 def checkEvents(user):
-    print "Checking Events"
+    #print "Checking Events"
     events = Event.objects.filter(creator = user)
     for event in events:
         current_time = timezone.now()
@@ -167,9 +167,5 @@ def checkEvents(user):
                     break
 
             if(found):
-                print "Unsubscribing from:", event.subreddit
+                #print "Unsubscribing from:", event.subreddit
                 unsubscribe(access_token, fullname)
-            else:
-                #print "Subscribing to:", event.subreddit
-                #subscribe(access_token, fullname)
-                print "Already unsubscribed from:", event.subreddit

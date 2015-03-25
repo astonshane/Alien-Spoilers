@@ -29,8 +29,14 @@ def my_subreddits_render(request):
     return render(request, 'subs/my_subreddits.html', {'user_name': user_name, 'my_subreddits': my_subreddits})
 
 def index_render(request):
+
     user = request.user
     profile = request.user.profile
+
+    if request.method == 'POST':
+        event_id = request.GET.get('id', '')
+        event = Event.objects.filter(creator = user, event_id = event_id)[0]
+        event.delete()
 
     checkEvents(user)
 
