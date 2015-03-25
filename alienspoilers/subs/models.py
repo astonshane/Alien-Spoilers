@@ -34,6 +34,8 @@ class Event(models.Model):
 
     event_id = models.CharField(max_length=200)
     finished = models.BooleanField(default=False)
+    repeat = models.BooleanField(default=False)
+    repeat_type = models.CharField(max_length=200, null=True)
 
 
     def __str__(self):

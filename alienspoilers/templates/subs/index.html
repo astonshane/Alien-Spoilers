@@ -30,6 +30,7 @@
       <th>Subreddit</th>
       <th>Start Date</th>
       <th>End Date</th>
+      <th>Repeat</th>
       <th></th>
   </tr>
   {% for event in current_events %}
@@ -38,6 +39,13 @@
       <td> {{ event.subreddit }} </td>
       <td> {{ event.start_date }} </td>
       <td> {{ event.end_date }} </td>
+      <td>
+        {%if event.repeat %}
+          <img src="/static/admin/img/icon-yes.gif" alt="True" />
+        {%else%}
+          <img src="/static/admin/img/icon-no.gif" alt="True" />
+        {%endif%}
+        </td>
       <td> <form id="delete_event_form" method="post" action="/subs/?id={{event.event_id}}">
             {% csrf_token %}
             <input type="submit" value="delete" />
@@ -56,6 +64,7 @@
       <th>Subreddit</th>
       <th>Start Date</th>
       <th>End Date</th>
+      <th>Repeat</th>
       <th></th>
   </tr>
   {% for event in past_events %}
@@ -64,6 +73,13 @@
       <td> {{ event.subreddit }} </td>
       <td> {{ event.start_date }} </td>
       <td> {{ event.end_date }} </td>
+      <td>
+        {%if event.repeat %}
+          <img src="/static/admin/img/icon-yes.gif" alt="True" />
+        {%else%}
+          <img src="/static/admin/img/icon-no.gif" alt="True" />
+        {%endif%}
+        </td>
       <td> <form id="delete_event_form" method="post" action="/subs/?id={{event.event_id}}">
             {% csrf_token %}
             <input type="submit" value="delete" />

@@ -22,6 +22,16 @@
 
           {{ event_form.as_p }}
 
+          Repeat:</br>
+          <input type="radio" name="choice" id="choice0" value="None" checked/>
+          <label for="choice0">None</label><br />
+
+          <input type="radio" name="choice" id="choice1" value="Weekly" />
+          <label for="choice1">Weekly</label><br />
+
+          <input type="radio" name="choice" id="choice2" value="Monthly" />
+          <label for="choice2">Monthly</label><br />
+
           <input type="submit" name="submit" value="Create Event" />
     </form>
   {% endif %}

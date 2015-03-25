@@ -175,7 +175,6 @@ def create_event(request):
     if request.method == 'POST':
         # Attempt to grab information from the raw form information.
         event_form = CreateEventForm(data=request.POST)
-
         # If the for is valid...
         if event_form.is_valid():
             # Save the user's form data to the database.
@@ -184,6 +183,12 @@ def create_event(request):
             event.creator = request.user
             event.event_id = uuid.uuid4()
             event.pub_date = timezone.now()
+
+            repeat = request.POST['choice']
+            if repeat != "None":
+                event.repeat = True
+                event.repeat_type = repeat
+
 
             r = praw.Reddit(user_agent())
             sr = event.subreddit.replace("/r/","")

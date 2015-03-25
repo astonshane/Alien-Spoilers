@@ -147,6 +147,14 @@ def subscribe(access_token, fullname):
     #print dump
 
 def checkEvents(user):
+    profile = user.profile
+    #refresh the access_token if necessary
+    if(timezone.now() >= profile.token_expiry):
+        refresh_token(profile)
+
+    access_token = profile.access_token
+    my_subreddits = get_my_subreddits(access_token)
+
     #get all of the events
     events = Event.objects.filter(creator = user)
     #loop through them
@@ -155,15 +163,8 @@ def checkEvents(user):
         #if the current time after the start date of this event and
         #   it hasn't been marked as complete...
         if current_time > event.start_date and not event.finished:
-            profile = user.profile
-            #refresh the access_token if necessary
-            if(timezone.now() >= profile.token_expiry):
-                refresh_token(profile)
-
-            access_token = profile.access_token
-            fullname = event.subreddit_fullname
-            my_subreddits = get_my_subreddits(access_token)
             found = False
+            fullname = event.subreddit_fullname
 
             #search for the subreddit for this event in my subreddits
             for subreddit in my_subreddits:
