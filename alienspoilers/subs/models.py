@@ -33,6 +33,8 @@ class Event(models.Model):
     end_date = models.DateTimeField('end date')
 
     event_id = models.CharField(max_length=200)
+    finished = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.title

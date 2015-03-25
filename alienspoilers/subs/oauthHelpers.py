@@ -147,12 +147,16 @@ def subscribe(access_token, fullname):
     #print dump
 
 def checkEvents(user):
-    #print "Checking Events"
+    #get all of the events
     events = Event.objects.filter(creator = user)
+    #loop through them
     for event in events:
         current_time = timezone.now()
-        if current_time > event.start_date and current_time < event.end_date:
+        #if the current time after the start date of this event and
+        #   it hasn't been marked as complete...
+        if current_time > event.start_date and not event.finished:
             profile = user.profile
+            #refresh the access_token if necessary
             if(timezone.now() >= profile.token_expiry):
                 refresh_token(profile)
 
@@ -161,11 +165,18 @@ def checkEvents(user):
             my_subreddits = get_my_subreddits(access_token)
             found = False
 
+            #search for the subreddit for this event in my subreddits
             for subreddit in my_subreddits:
+                #print subreddit.name
                 if subreddit.fullname == fullname:
                     found = True
                     break
 
-            if(found):
-                #print "Unsubscribing from:", event.subreddit
+            if current_time < event.end_date and found:
+                print "unsubscribing from ", event.subreddit
                 unsubscribe(access_token, fullname)
+            elif current_time > event.end_date and not found:
+                print "subscribing to ", event.subreddit
+                subscribe(access_token, fullname)
+                event.finished = True
+                event.save()
