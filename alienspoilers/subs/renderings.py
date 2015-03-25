@@ -32,7 +32,16 @@ def index_render(request):
     user = request.user
     profile = request.user.profile
 
+    checkEvents(user)
+
     #get all of the events which the user is a part of...
     events = Event.objects.filter(creator = user)
+    current_events = []
+    past_events = []
+    for event in events:
+        if event.end_date > timezone.now():
+            current_events.append(event)
+        else:
+            past_events.append(event)
 
-    return render(request, 'subs/index.html', {'events': events})
+    return render(request, 'subs/index.html', {'current_events': current_events, 'past_events': past_events})

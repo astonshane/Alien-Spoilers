@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib import admin
+import uuid
 
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
@@ -30,6 +31,8 @@ class Event(models.Model):
     pub_date = models.DateTimeField('date published')
     start_date = models.DateTimeField('start date')
     end_date = models.DateTimeField('end date')
+
+    event_id = models.CharField(max_length=200)
 
     def __str__(self):
         return self.title
