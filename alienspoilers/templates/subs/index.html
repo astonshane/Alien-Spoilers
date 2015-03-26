@@ -42,8 +42,10 @@
       <td>
         {%if event.repeat %}
           <img src="/static/admin/img/icon-yes.gif" alt="True" />
+          {{event.repeat_type}}
         {%else%}
           <img src="/static/admin/img/icon-no.gif" alt="True" />
+          None
         {%endif%}
         </td>
       <td> <form id="delete_event_form" method="post" action="/subs/?id={{event.event_id}}">
@@ -76,8 +78,10 @@
       <td>
         {%if event.repeat %}
           <img src="/static/admin/img/icon-yes.gif" alt="True" />
+          {{event.repeat_type}}
         {%else%}
           <img src="/static/admin/img/icon-no.gif" alt="True" />
+          None
         {%endif%}
         </td>
       <td> <form id="delete_event_form" method="post" action="/subs/?id={{event.event_id}}">

@@ -146,6 +146,28 @@ def subscribe(access_token, fullname):
     dump = response.json()
     #print dump
 
+def newRepeatedEvent(event):
+    newEvent = Event()
+    newEvent.creator = event.creator
+
+    newEvent.title = event.title
+    newEvent.subreddit = event.subreddit
+    newEvent.subreddit_fullname = event.subreddit_fullname
+
+    newEvent.pub_date = event.pub_date
+    if event.repeat_type == "Weekly":
+        newEvent.start_date = event.start_date + datetime.timedelta(weeks=1)
+        newEvent.end_date = event.end_date + datetime.timedelta(weeks=1)
+    elif event.repeat_type == "Daily":
+        newEvent.start_date = event.start_date + datetime.timedelta(days=1)
+        newEvent.end_date = event.end_date + datetime.timedelta(days=1)
+
+    newEvent.event_id = uuid4()
+    newEvent.finished = False
+    newEvent.repeat = True
+    newEvent.repeat_type = event.repeat_type
+    newEvent.save()
+
 def checkEvents(user):
     profile = user.profile
     #refresh the access_token if necessary
@@ -181,3 +203,8 @@ def checkEvents(user):
                 subscribe(access_token, fullname)
                 event.finished = True
                 event.save()
+
+                #if this was a repeated event, create the next event in the sequence
+                if event.repeat:
+                    print "creating new event..."
+                    newRepeatedEvent(event)

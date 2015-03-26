@@ -14,7 +14,6 @@ from subreddit import Subreddit
 from oauthHelpers import *
 from renderings import *
 import praw
-import uuid
 
 #parse the config file to get the oauth client id/secret
 Config = ConfigParser.ConfigParser()
@@ -181,7 +180,7 @@ def create_event(request):
             event = event_form.save(commit=False)
 
             event.creator = request.user
-            event.event_id = uuid.uuid4()
+            event.event_id = uuid4()
             event.pub_date = timezone.now()
 
             repeat = request.POST['choice']
