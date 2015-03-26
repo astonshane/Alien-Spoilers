@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load  staticfiles %}
 
 {% block title %}Welcome to Alien Spoilers{% endblock %}
 {% block customStyle %}
@@ -22,11 +23,11 @@
 {% endblock %}
 
 {% block content %}
-  <p>
+  <div id="headerwrap">
     Create a new event <a href="/subs/create_event">here</a>!
   </br>
     View all of your Reddit Subscriptions <a href="/subs/my_subreddits">here</a>!
-  </p>
+  </div>
   <h2>Your Current Events:</h2>
 
   <table style="width:100%">
