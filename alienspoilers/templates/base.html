@@ -7,18 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="static/assets/ico/favicon.ico">
+    <link rel="shortcut icon" href="/static/assets/ico/favicon.ico">
 
     <title>{% block title %}Alien Spoilers{% endblock %}</title>
 
     {% block customStyle %}{% endblock %}
 
     <!-- Bootstrap core CSS -->
-    <link href="static/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/assets/css/style.css" rel="stylesheet">
-    <link href="static/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/assets/css/style.css" rel="stylesheet">
+    <link href="/static/assets/css/font-awesome.min.css" rel="stylesheet">
 
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -30,7 +30,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="static/assets/js/modernizr.js"></script>
+    <script src="/static/assets/js/modernizr.js"></script>
   </head>
 
   <body>
@@ -45,32 +45,31 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">Alien Spoilers</a>
+          <a class="navbar-brand" href="/">Alien Spoilers</a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">HOME</a></li>
-            <li><a href="about.html">ABOUT</a></li>
-            <li><a href="contact.html">CONTACT</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">PAGES <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="blog.html">BLOG</a></li>
-                <li><a href="single-post.html">SINGLE POST</a></li>
-                <li><a href="portfolio.html">PORTFOLIO</a></li>
-                <li><a href="single-project.html">SINGLE PROJECT</a></li>
-              </ul>
-            </li>
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/">About</a></li>
+            <li><a href="/">Contact</a></li>
+            {% if user.is_authenticated %}
+              <li><a href="/subs/logout/">Logout</a></li>
+            {% else %}
+              <li><a href="/subs/logout/">Login</a></li>
+              <li><a href="/subs/register/">Register Here!</a></li>
+            {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
+    <div id="headerwrap">
     {% block content %}
     <p>
       Content goes here...
     </p>
     {% endblock %}
+  </div>
 
 
 	<!-- *****************************************************************************************************************
@@ -82,26 +81,28 @@
 		 		<div class="col-lg-4">
 		 			<h4>About</h4>
 		 			<div class="hline-w"></div>
-		 			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+		 			<p>
+             Alien Spoilers is an awesome web app to automatically manage your
+             Reddit subscriptions so that you can avoid spoilers for your
+             favorite TV shows and sporting events while still wasting all of
+             your time on Reddit!
+          </p>
 		 		</div>
 		 		<div class="col-lg-4">
-		 			<h4>Social Links</h4>
+		 			<h4>For More Information</h4>
 		 			<div class="hline-w"></div>
 		 			<p>
-		 				<a href="#"><i class="fa fa-dribbble"></i></a>
-		 				<a href="#"><i class="fa fa-facebook"></i></a>
-		 				<a href="#"><i class="fa fa-twitter"></i></a>
-		 				<a href="#"><i class="fa fa-instagram"></i></a>
-		 				<a href="#"><i class="fa fa-tumblr"></i></a>
+            <a href="https://github.com/astonshane/Alien-Spoilers">Alien Spoilers Github </a> </br>
+            <a href="https://github.com/astonshane">Shane Aston's Github </a> </br>
+            <a href="http://rcos.rpi.edu/">Rensselaer Center for Open Source Software (RCOS) </a> </br>
 		 			</p>
 		 		</div>
 		 		<div class="col-lg-4">
-		 			<h4>Our Bunker</h4>
+		 			<h4>Developer</h4>
 		 			<div class="hline-w"></div>
 		 			<p>
-		 				Some Ave, 987,<br/>
-		 				23890, New York,<br/>
-		 				United States.<br/>
+		 				Shane Aston<br/>
+		 				astonshane@gmail.com<br/>
 		 			</p>
 		 		</div>
 
@@ -113,13 +114,13 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="static/assets/js/bootstrap.min.js"></script>
-	<script src="static/assets/js/retina-1.1.0.js"></script>
-	<script src="static/assets/js/jquery.hoverdir.js"></script>
-	<script src="static/assets/js/jquery.hoverex.min.js"></script>
-	<script src="static/assets/js/jquery.prettyPhoto.js"></script>
-  	<script src="static/assets/js/jquery.isotope.min.js"></script>
-  	<script src="static/assets/js/custom.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+	<script src="/static/assets/js/retina-1.1.0.js"></script>
+	<script src="/static/assets/js/jquery.hoverdir.js"></script>
+	<script src="/static/assets/js/jquery.hoverex.min.js"></script>
+	<script src="/static/assets/js/jquery.prettyPhoto.js"></script>
+  	<script src="/static/assets/js/jquery.isotope.min.js"></script>
+  	<script src="/static/assets/js/custom.js"></script>
 
 
     <script>
