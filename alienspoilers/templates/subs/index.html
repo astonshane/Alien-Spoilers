@@ -22,6 +22,11 @@
 {% endblock %}
 
 {% block content %}
+  <p>
+    Create a new event <a href="/subs/create_event">here</a>!
+  </br>
+    View all of your Reddit Subscriptions <a href="/subs/my_subreddits">here</a>!
+  </p>
   <h2>Your Current Events:</h2>
 
   <table style="width:100%">
@@ -94,13 +99,5 @@
     <td colspan = "4"> Sorry, No events found... </td>
   {% endfor %}
   </table>
-
-  <p>
-    Create a new event <a href="/subs/create_event">here</a>!
-  </p>
-
-  <p>
-    View all of your Reddit Subscriptions <a href="/subs/my_subreddits">here</a>!
-  </p>
 
 {% endblock %}
