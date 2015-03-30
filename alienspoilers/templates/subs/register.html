@@ -2,9 +2,10 @@
 {% load  staticfiles %}
 
 {% block title %}Register for Alien Spoilers{% endblock %}
+{% block pagename %} Register {% endblock %}
 
 {% block content %}
-  <h2>Register with Alien Spoilers</h2>
+<div class="container mtb">
 
   {% if registered %}
     <p>
@@ -25,7 +26,7 @@
     </form>
 
   {% endif %}
-
+</div>
 {% endblock %}
 
 <!--

@@ -3,8 +3,10 @@
 
 {% block title %}Create an Event{% endblock %}
 
+{% block pagename %} Create Event {% endblock %}
+
 {% block content %}
-  <h2>Create an Event</h2>
+<div class="container mtb">
 
   {% if created %}
     Alien Spoilers says: <strong>thank you for creating an event!</strong>
@@ -36,6 +38,7 @@
           <input type="submit" name="submit" value="Create Event" />
     </form>
   {% endif %}
+</div>
 {% endblock %}
 
 

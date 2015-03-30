@@ -2,23 +2,25 @@
 {% load  staticfiles %}
 
 {% block title %}Login to Alien Spoilers{% endblock %}
+{% block pagename %} Login {% endblock %}
 
 {% block content %}
-  <h2>Login to Alien Spoilers</h2>
-
+<div class="container mtb">
   {% if invalid %}
     <div style="color:#FF0000"> Invalid login details supplied. Try Again! </div>
   {% endif %}
 
   <form id="login_form" method="post" action="/subs/login/">
       {% csrf_token %}
-      Username: <input type="text" name="username" value="" size="50" />
+
+      <label for="id_username">Username:</label> <input type="text" name="username" value="" size="50" />
       <br />
-      Password: <input type="password" name="password" value="" size="50" />
+      <label for="id_password">Password:</label><input type="password" name="password" value="" size="50" />
       <br />
 
       <input type="submit" value="submit" />
   </form>
+</div>
 {% endblock %}
 
 <!--

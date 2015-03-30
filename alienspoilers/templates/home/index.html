@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 
 {% block title %}Welcome to Alien Spoilers{% endblock %}
+{% block pagename %} Welcome to Alien Spoilers {% endblock %}
 
-{% block content %}
-<h2>Welcome to Alien Spoilers!</h2>
+
+{%block content %}
+<div id="headerwrap">
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+        <h3>Avoid spoilers for your favorite tv shows with</h3>
+        <h1>Alien Spoilers </h1>
+        <h5>Manage your Reddit subscriptions so that you can avoid </h5>
+        <h5>spoilers while still wasting all of your time on Reddit!</h5>
+      </div>
+      <div class="col-lg-8 col-lg-offset-2 himg">
+        <img src="/static/assets/img/browser.png" class="img-responsive">
+      </div>
+    </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /headerwrap -->
+{% endblock %}
+
+{% block content1 %}
 
 <p>Alien Spoilers is an awesome web app to automatically manage your Reddit
   subscriptions so that you can avoid spoilers for your favorite TV shows and

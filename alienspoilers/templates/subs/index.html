@@ -22,7 +22,12 @@
 </style>
 {% endblock %}
 
+{% block pagename %}
+Your Events
+{% endblock %}
+
 {% block content %}
+<div class="container mtb">
     Create a new event <a href="/subs/create_event">here</a>!
   </br>
     View all of your Reddit Subscriptions <a href="/subs/my_subreddits">here</a>!
@@ -98,5 +103,5 @@
     <td colspan = "4"> Sorry, No events found... </td>
   {% endfor %}
   </table>
-
+</div>
 {% endblock %}

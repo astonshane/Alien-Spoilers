@@ -33,5 +33,5 @@ def index(request):
         else:
             return render(request, 'subs/index.html', {'link_url': make_authorization_url()})
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', {'home': True})
     #return HttpResponse("Hello World. Homepage")

@@ -7,9 +7,14 @@
 	Version: 1.0
 	URL: http://alvarez.is
 
+#################################################################
+	My oranges turned blue color palatte
+	http://www.color-hex.com/color-palette/6028
+
 ################################################################# */
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,700,900);
 @import url(http://fonts.googleapis.com/css?family=Lato:400,900);
+@import url(http://fonts.googleapis.com/css?family=Poiret+One|Comfortaa);
 @import url("prettyPhoto.css") screen;
 @import url("hoverex-all.css") screen;
 
@@ -54,6 +59,7 @@ img {
 a {
 	padding: 0;
 	margin: 0;
+	color: black;
 	text-decoration: none;
 	-webkit-transition: background-color .4s linear, color .4s linear;
 	-moz-transition: background-color .4s linear, color .4s linear;
@@ -64,7 +70,7 @@ a {
 a:hover,
 a:focus {
   text-decoration: none;
-  color:#01b2fe;
+  color:#ffa54c;
 }
 
 ::-moz-selection  {
@@ -73,7 +79,6 @@ a:focus {
 	background:#2B2E31;
 }
 ::selection {
-	color: #fff;
 	text-shadow:none;
 	background:#2B2E31;
 }
@@ -92,7 +97,8 @@ a:focus {
 }
 
 .navbar-brand {
-	font-family: 'Raleway', sans-serif;
+	/*font-family: 'Raleway', sans-serif;*/
+	font-family: 'Poiret One', cursive;
 	font-weight: 900;
 }
 
@@ -107,16 +113,16 @@ a:focus {
 }
 
 .navbar-default .navbar-nav > li > a:hover {
-	color: #00b3fe;
+	color: #ffa54c;
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-	color: #00b3fe;
+	color: #ffa54c;
 	background-color: transparent;
 }
 
 .navbar-default {
-	background-color: #384452;
+	background-color: #00143e;
 	border-color: transparent;
 }
 
@@ -207,7 +213,9 @@ a:focus {
 #headerwrap {
 
 
-	background: url(../img/t-back.jpg) no-repeat center top;
+	/*background: #00b3fe;*/
+	/*background: #fA8765;*/
+	background: #fe8a17;
 	margin-top: 0px;
 	padding-top:100px;
 	text-align:center;
@@ -351,11 +359,11 @@ a:focus {
 #footerwrap {
 	padding-top: 60px;
 	padding-bottom: 60px;
-	background: #384452;
+	background: #00143e;
 }
 
-#footerwrap p {
-	color: #bfc9d3;
+#footerwrap p, #footerwrap a {
+	color: white;
 }
 
 #footerwrap h4 {
@@ -368,8 +376,8 @@ a:focus {
 	padding-right: 25px;
 }
 
-#footerwrap i:hover {
-	color: #00b3fe
+#footerwrap a:hover {
+	color: #ffa54c
 }
 
 /*	################################################################
@@ -378,7 +386,7 @@ a:focus {
 /* General Tweaks */
 
 #blue {
-	background: #00b3fe;
+	background: #fe8a17;
 	margin-top: 60px;
 	margin-bottom: 60px;
 	padding-top: 25px;
@@ -449,7 +457,7 @@ csmall2 {
 }
 .popular-posts li a,
 .popular-posts li a:hover {
-	color:#2f2f2f;
+	color:#ffa54c;
 	text-decoration: none;
 	}
 
@@ -472,4 +480,9 @@ csmall2 {
 .share i {
 	padding-right: 15px;
 	font-size: 18px;
+}
+
+
+label {
+  width: 15%;
 }
