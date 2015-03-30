@@ -50,9 +50,13 @@
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
+            {% if user.is_authenticated %}
             <li><a href="/subs/my_subreddits">Subscriptions</a></li>
+            {% endif %}
+            {% if False %}
             <li><a href="/">About</a></li>
             <li><a href="/">Contact</a></li>
+            {% endif %}
             {% if user.is_authenticated %}
               <li><a href="/subs/logout/">Logout</a></li>
             {% else %}
