@@ -25,9 +25,9 @@ Your Events
     Create a new event <a href="/subs/create_event">here</a>!
   </br>
     View all of your Reddit Subscriptions <a href="/subs/my_subreddits">here</a>!
-  <h2>Your Current Events:</h2>
 
   <table style="width:100%">
+    <td colspan = "6"><h2>Your Current Events:</h2></td>
     <tr>
       <th>Title</th>
       <th>Subreddit</th>
@@ -58,12 +58,10 @@ Your Events
       </td>
     </tr>
   {% empty %}
-    <td colspan = "4"> Sorry, No events found... </td>
+    <td colspan = "6"> Sorry, No events found... </td>
   {% endfor %}
-  </table>
-  <h2>Your Past Events:</h2>
 
-  <table style="width:100%">
+    <td colspan = "6"><h2>Your Past Events:</h2></td>
     <tr>
       <th>Title</th>
       <th>Subreddit</th>
@@ -94,7 +92,7 @@ Your Events
       </td>
     </tr>
   {% empty %}
-    <td colspan = "4"> Sorry, No events found... </td>
+    <td colspan = "6"> Sorry, No events found... </td>
   {% endfor %}
   </table>
 </div>
