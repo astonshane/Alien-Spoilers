@@ -123,7 +123,8 @@ def user_login(request):
                 # We'll send the user back to the homepage.
                 login(request, user)
                 #run checks upon login to see if the user has any events current events:
-                checkEvents(user)
+                if user.profile.reddit_linked:
+                    checkEvents(user)
                 return HttpResponseRedirect('/subs/')
             else:
                 # An inactive account was used - no logging in!
