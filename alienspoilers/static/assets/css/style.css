@@ -224,35 +224,40 @@ a:focus {
 
 /* line 210, ../scss/style.scss */
 .mtb {
-  margin-top: 80px;
+  margin-top: 30px;
   margin-bottom: 80px;
 }
 
-/* line 215, ../scss/style.scss */
+/* line 214, ../scss/style.scss */
+.mtb a {
+  color: #d0a825;
+}
+
+/* line 218, ../scss/style.scss */
 .mb {
   margin-bottom: 60px;
 }
 
-/* line 219, ../scss/style.scss */
+/* line 222, ../scss/style.scss */
 .mt {
   margin-top: 60px;
 }
 
-/* line 223, ../scss/style.scss */
+/* line 226, ../scss/style.scss */
 .hline {
-  border-bottom: 2px solid #384452;
+  border-bottom: 2px solid #fffae4;
 }
 
-/* line 227, ../scss/style.scss */
+/* line 230, ../scss/style.scss */
 .hline-w {
-  border-bottom: 2px solid #ffffff;
-  margin-bottom: 25px;
+  border-bottom: 2px solid #fffae4;
+  /*margin-bottom: 25px;*/
 }
 
 /*	################################################################
 	SITE WRAPS
 ################################################################# */
-/* line 235, ../scss/style.scss */
+/* line 238, ../scss/style.scss */
 #headerwrap {
   background: #d0a825;
   margin-top: 0px;
@@ -272,49 +277,49 @@ a:focus {
   background-size: cover;
 }
 
-/* line 256, ../scss/style.scss */
+/* line 259, ../scss/style.scss */
 #headerwrap h3, h5 {
   color: #fffae4;
   font-weight: 400;
 }
 
-/* line 261, ../scss/style.scss */
+/* line 264, ../scss/style.scss */
 #headerwrap h1 {
   color: #fffae4;
   margin-bottom: 25px;
 }
 
-/* line 266, ../scss/style.scss */
+/* line 269, ../scss/style.scss */
 #headerwrap .img-responsive {
   margin: 0 auto;
 }
 
 /* Footer */
-/* line 272, ../scss/style.scss */
+/* line 275, ../scss/style.scss */
 #footerwrap {
   padding-top: 60px;
   padding-bottom: 60px;
   background: #26393d;
 }
 
-/* line 278, ../scss/style.scss */
+/* line 281, ../scss/style.scss */
 #footerwrap p, #footerwrap a {
   color: #fffae4;
 }
 
-/* line 282, ../scss/style.scss */
+/* line 285, ../scss/style.scss */
 #footerwrap h4 {
   color: #fffae4;
 }
 
-/* line 286, ../scss/style.scss */
+/* line 289, ../scss/style.scss */
 #footerwrap i {
   font-size: 30px;
   color: #fffae4;
   padding-right: 25px;
 }
 
-/* line 292, ../scss/style.scss */
+/* line 295, ../scss/style.scss */
 #footerwrap a:hover {
   color: #e8e595;
 }
@@ -323,7 +328,7 @@ a:focus {
 	PAGE CONFIGURATIONS
 ################################################################# */
 /* General Tweaks */
-/* line 301, ../scss/style.scss */
+/* line 304, ../scss/style.scss */
 #blue {
   background: #d0a825;
   margin-top: 60px;
@@ -332,43 +337,43 @@ a:focus {
   padding-bottom: 25px;
 }
 
-/* line 309, ../scss/style.scss */
+/* line 312, ../scss/style.scss */
 #blue h3 {
   color: #fffae4;
   margin-left: 15px;
 }
 
-/* line 314, ../scss/style.scss */
+/* line 317, ../scss/style.scss */
 .ctitle {
   color: #00b3fe;
   font-weight: 700;
   margin-bottom: 15px;
 }
 
-/* line 320, ../scss/style.scss */
+/* line 323, ../scss/style.scss */
 csmall {
   font-size: 12px;
   color: #b3b3b3;
 }
 
-/* line 324, ../scss/style.scss */
+/* line 327, ../scss/style.scss */
 csmall2 {
   font-size: 12px;
   color: #f39c12;
 }
 
-/* line 329, ../scss/style.scss */
+/* line 332, ../scss/style.scss */
 .spacing {
   margin-top: 40px;
   margin-bottom: 40px;
 }
 
-/* line 334, ../scss/style.scss */
+/* line 337, ../scss/style.scss */
 .badge-theme {
   background: #00b3fe;
 }
 
-/* line 339, ../scss/style.scss */
+/* line 342, ../scss/style.scss */
 label {
   width: 15%;
 }

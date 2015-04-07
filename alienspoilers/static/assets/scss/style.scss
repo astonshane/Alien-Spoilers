@@ -208,8 +208,11 @@ a:focus {
 }
 
 .mtb {
-	margin-top: 80px;
+	margin-top: 30px;
 	margin-bottom: 80px;
+}
+.mtb a {
+  color: $primary-color;
 }
 
 .mb {
@@ -221,12 +224,12 @@ a:focus {
 }
 
 .hline {
-	border-bottom: 2px solid #384452;
+	border-bottom: 2px solid $navbar-text-color;
 }
 
 .hline-w {
-	border-bottom: 2px solid #ffffff;
-	margin-bottom: 25px;
+	border-bottom: 2px solid $navbar-text-color;
+	/*margin-bottom: 25px;*/
 }
 /*	################################################################
 	SITE WRAPS
