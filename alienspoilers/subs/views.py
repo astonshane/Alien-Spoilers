@@ -214,7 +214,7 @@ def create_event(request):
             print "invalid subreddit entered"
             event_form = CreateEventForm()
             return render(request, 'subs/create_event.html',
-                {'event_form': event_form, 'created': created, 'invalid': True})
+                {'event_form': event_form, 'created': created, 'invalid': True, 'msg': "Invalid subreddit entered. Try again"})
 
 
         try:
@@ -227,7 +227,7 @@ def create_event(request):
             print sys.exc_info()[0]
             event_form = CreateEventForm()
             return render(request, 'subs/create_event.html',
-                {'event_form': event_form, 'created': created, 'invalid': True})
+                {'event_form': event_form, 'created': created, 'invalid': True, 'msg': "Error while saving event. Try Again"})
 
 
     # Not a HTTP POST, so we render our form using two ModelForm instances.
