@@ -189,6 +189,10 @@ def create_event(request):
                 event.repeat = True
                 event.repeat_type = repeat
 
+            #print request.POST
+            #startDate = request.POST['datetimepicker6']
+            #print startDate
+
 
             r = praw.Reddit(user_agent())
             sr = event.subreddit.replace("/r/","")
