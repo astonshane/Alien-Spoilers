@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from uuid import uuid4
 from django.contrib.auth.models import User
-from subs.models import UserProfile
+from subs.models import UserProfile, Event
 from django.utils import timezone
 import datetime
 import urllib
@@ -176,49 +176,59 @@ def create_event(request):
         # Attempt to grab information from the raw form information.
         event_form = CreateEventForm(data=request.POST)
         # If the for is valid...
-        if event_form.is_valid():
-            # Save the user's form data to the database.
-            event = event_form.save(commit=False)
+        # Save the user's form data to the database.
+        event = Event()
+        event.subreddit = request.POST['subreddit']
+        event.title = request.POST['title']
+        event.start_date = request.POST['start_date']
+        event.end_date = request.POST['end_date']
 
-            event.creator = request.user
-            event.event_id = uuid4()
-            event.pub_date = timezone.now()
+        event.creator = request.user
+        event.event_id = uuid4()
+        event.pub_date = timezone.now()
 
-            repeat = request.POST['choice']
-            if repeat != "None":
-                event.repeat = True
-                event.repeat_type = repeat
+        repeat = request.POST['choice']
+        if repeat != "None":
+            event.repeat = True
+            event.repeat_type = repeat
 
-            #print request.POST
-            #startDate = request.POST['datetimepicker6']
-            #print startDate
+        #print request.POST
+        for p in request.POST:
+            print p, request.POST[p]
+        #startDate = request.POST['datetimepicker6']
+        #print startDate
 
 
-            r = praw.Reddit(user_agent())
-            sr = event.subreddit.replace("/r/","")
-            #print sr
-            try:
-                x = r.get_subreddit(sr, fetch=True)
-                event.subreddit_fullname = x.fullname.encode('utf-8')
+        r = praw.Reddit(user_agent())
+        sr = event.subreddit.replace("/r/","")
+        #print sr
+        try:
+            #print "subreddit: ####", sr
+            x = r.get_subreddit(sr, fetch=True)
+            event.subreddit_fullname = x.fullname.encode('utf-8')
+            #print event.subreddit_fullname
 
-                #save the form
-                event.save()
+        except:
+            #the subreddit lookup failed...
+            #   display an error message
+            print "invalid subreddit entered"
+            event_form = CreateEventForm()
+            return render(request, 'subs/create_event.html',
+                {'event_form': event_form, 'created': created, 'invalid': True})
 
-                # Update our variable to tell the template the event creation was successful.
-                created = True
-            except:
-                #the subreddit lookup failed...
-                #   display an error message
-                print "invalid subreddit entered"
-                event_form = CreateEventForm()
-                return render(request, 'subs/create_event.html',
-                    {'event_form': event_form, 'created': created, 'invalid': True})
 
-        # Invalid form?
-        # Print problems to the terminal.
-        # They'll also be shown to the user.
-        else:
-            print event_form.errors
+        try:
+            #save the form
+            event.save()
+            # Update our variable to tell the template the event creation was successful.
+            created = True
+        except:
+            print "error occured while saving event"
+            print sys.exc_info()[0]
+            event_form = CreateEventForm()
+            return render(request, 'subs/create_event.html',
+                {'event_form': event_form, 'created': created, 'invalid': True})
+
 
     # Not a HTTP POST, so we render our form using two ModelForm instances.
     # These forms will be blank, ready for user input.

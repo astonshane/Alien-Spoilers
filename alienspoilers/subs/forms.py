@@ -19,24 +19,10 @@ class UserProfileForm(forms.ModelForm):
 
 
 class CreateEventForm(forms.ModelForm):
-    #start_date = forms.DateTimeField(widget=forms.SplitDateTimeWidget(), initial=datetime.now())
-    #end_date = forms.DateTimeField(widget=AdminDateWidget)
-    #start_date = forms.DateField(widget=widgets.AdminDateWidget)
-    #end_date = forms.DateField(widget=widgets.AdminDateWidget)
-    #title = forms.CharField()
-    #subreddit = forms.CharField()
 
-    start_date = forms.DateTimeField(widget=forms.DateTimeInput(), initial=timezone.now())
-    end_date = forms.DateTimeField(widget=forms.DateTimeInput(), initial=timezone.now() + datetime.timedelta(days=1))
+    #start_date = forms.DateTimeField(widget=forms.DateTimeInput(), initial=timezone.now())
+    #end_date = forms.DateTimeField(widget=forms.DateTimeInput(), initial=timezone.now() + datetime.timedelta(days=1))
 
     class Meta:
         model = Event
-        fields = ['title', 'subreddit', 'start_date', 'end_date']
-
-
-        '''creator = User
-
-        title = forms.CharField('Event Title:')
-
-        start_date = forms.DateTimeField(initial=datetime.now())
-        end_date = forms.DateTimeField(initial=datetime.now())'''
+        fields = ['title', 'subreddit']

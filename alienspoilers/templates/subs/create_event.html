@@ -25,38 +25,43 @@
 
           {{ event_form.as_p }}
 
-              Start Date:
-              <div class='input-group date' id='datetimepicker6' name="startDate">
-                  <input type='text' class="form-control" />
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
+          <!--Start Date: <input maxlength="200" id="start_date" name="start_date" type="text" /></br>
+          End Date: <input maxlength="200" id = "start_date" name="end_date" type="text" /></br>-->
 
-        </br>
-              End Date:
-              <div class='input-group date' id='datetimepicker7' name="endDate">
-                  <input type='text' class="form-control"/>
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-  <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker6').datetimepicker({
-            format:"YYYY-MM-DD HH:mm:ss"
-          });
-          $('#datetimepicker7').datetimepicker({
-            format:"YYYY-MM-DD HH:mm:ss"
-          });
-          $("#datetimepicker6").on("dp.change", function (e) {
-              $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-          });
-          $("#datetimepicker7").on("dp.change", function (e) {
-              $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-          });
-      });
-  </script>
+          <label for="datetimepicker6">Start Date:</label>
+          <div class='input-group date' id='datetimepicker6'>
+            <input type='text' class="form-control" maxlength="200" name="start_date" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+
+          </br>
+
+          <label for="datetimepicker7">End Date:</label>
+          <div class='input-group date' id='datetimepicker7'>
+            <input type='text' class="form-control" maxlength="200" name="end_date"/>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+
+          <script type="text/javascript">
+              $(function () {
+                  $('#datetimepicker6').datetimepicker({
+                    format:"YYYY-MM-DD HH:mm:ss"
+                  });
+                  $('#datetimepicker7').datetimepicker({
+                    format:"YYYY-MM-DD HH:mm:ss"
+                  });
+                  $("#datetimepicker6").on("dp.change", function (e) {
+                      $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                  });
+                  $("#datetimepicker7").on("dp.change", function (e) {
+                      $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+                  });
+              });
+          </script>
 
 
           Repeat:</br>
