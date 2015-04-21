@@ -193,8 +193,8 @@ def create_event(request):
             event.repeat_type = repeat
 
         #print request.POST
-        for p in request.POST:
-            print p, request.POST[p]
+        #for p in request.POST:
+        #    print p, request.POST[p]
         #startDate = request.POST['datetimepicker6']
         #print startDate
 

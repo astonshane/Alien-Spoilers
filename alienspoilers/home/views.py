@@ -33,5 +33,7 @@ def index(request):
         else:
             return render(request, 'subs/index.html', {'link_url': make_authorization_url()})
     else:
-        return render(request, 'home/index.html', {'home': True})
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+        return render(request, 'home/index.html', {'home': True, 'user_form': user_form, 'profile_form': profile_form})
     #return HttpResponse("Hello World. Homepage")

@@ -9,8 +9,10 @@
 <div class="container mtb">
 
   {% if created %}
-    Thanks for creating an event!
-    <a href="/">Return to the homepage.</a><br />
+    <h3>
+      Thanks for creating an event!
+      <a href="/">Return to the homepage.</a><br />
+    </h3>
   {% else %}
     Alien Spoilers says: <strong>create an event here!</strong><br />
     {% if invalid %}
@@ -68,10 +70,10 @@
           <input type="radio" name="choice" id="choice0" value="None" checked/>
           <label for="choice0">None</label><br />
 
-          <input type="radio" name="choice" id="choice1" value="Daily" />
+          <input type="radio" name="choice" id="choice1" value="Weekly" />
           <label for="choice1">Weekly</label><br />
 
-          <input type="radio" name="choice" id="choice2" value="Weekly" />
+          <input type="radio" name="choice" id="choice2" value="Monthly" />
           <label for="choice2">Monthly</label><br />
 
           <input type="submit" name="submit" value="Create Event" />

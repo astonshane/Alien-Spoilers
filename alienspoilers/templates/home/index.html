@@ -20,6 +20,42 @@
     </div><!-- /row -->
     </div> <!-- /container -->
 </div><!-- /headerwrap -->
+
+<!-- *****************************************************************************************************************
+ CONTACT FORMS
+ ***************************************************************************************************************** -->
+
+ <div class="container mtb">
+   <div class="row">
+     <div class="col-lg-8">
+       <h4>Register Today</h4>
+       <div class="hline"></div>
+       <form id="user_form" method="post" action="/subs/register/"
+           enctype="multipart/form-data">
+       {% csrf_token %}
+
+       {{ user_form.as_p }}
+       {{ profile_form.as_p }}
+          <button type="submit" name ="submit" class="btn btn-theme">Submit</button>
+        </form>
+    </div><! --/col-lg-8 -->
+
+     <div class="col-lg-4">
+       <h4>Login</h4>
+       <div class="hline"></div>
+       <form id="login_form" method="post" action="/subs/login/">
+           {% csrf_token %}
+
+           <label for="id_username">Username:</label> <input type="text" name="username" value="" size="50" />
+           <br />
+           <label for="id_password">Password:</label><input type="password" name="password" value="" size="50" />
+           <br />
+
+           <button type="submit" name ="submit" class="btn btn-theme">Submit</button>
+       </form>
+    </div>
+   </div><! --/row -->
+ </div><! --/container -->
 {% endblock %}
 
 {% block content1 %}
@@ -28,6 +64,7 @@
   subscriptions so that you can avoid spoilers for your favorite TV shows and
   sporting events while still wasting all of your time on Reddit!
 </p>
+
 {% endblock %}
 
 <!--
