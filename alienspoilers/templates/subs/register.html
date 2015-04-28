@@ -14,16 +14,16 @@
     </p>
 
   {% else %}
-    <form id="user_form" method="post" action="/subs/register/"
-        enctype="multipart/form-data">
+  <form id="user_form" method="post" action="/subs/register/"
+      enctype="multipart/form-data">
+  {% csrf_token %}
 
-        {% csrf_token %}
+     <p><label for="id_username">Username:</label> <input id="id_username" maxlength="30" name="username" type="text" /></p>
+     <p><label for="id_email">Email address:</label> <input id="id_email" maxlength="75" name="email" type="email" /></p>
+     <p><label for="id_password">Password:</label> <input id="id_password" name="password" type="password" /></p>
 
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-
-        <input type="submit" name="submit" value="Register" />
-    </form>
+     <button type="submit" name ="submit" class="btn btn-theme">Submit</button>
+   </form>
 
   {% endif %}
 </div>

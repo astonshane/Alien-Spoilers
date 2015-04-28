@@ -27,31 +27,31 @@
 
  <div class="container mtb">
    <div class="row">
-     <div class="col-lg-8">
+     <div class="col-lg-7" style="margin-left:auto; margin-right-auto;">
        <h4>Register Today</h4>
        <div class="hline"></div>
        <form id="user_form" method="post" action="/subs/register/"
            enctype="multipart/form-data">
        {% csrf_token %}
 
-       {{ user_form.as_p }}
-       {{ profile_form.as_p }}
+          <p><label for="id_username">Username:</label> <input id="id_username" maxlength="30" name="username" type="text" /></p>
+          <p><label for="id_email">Email address:</label> <input id="id_email" maxlength="75" name="email" type="email" /></p>
+          <p><label for="id_password">Password:</label> <input id="id_password" name="password" type="password" /></p>
+
           <button type="submit" name ="submit" class="btn btn-theme">Submit</button>
         </form>
     </div><! --/col-lg-8 -->
 
-     <div class="col-lg-4">
+     <div class="col-lg-5" style="margin-left:auto; margin-right-auto;">
        <h4>Login</h4>
        <div class="hline"></div>
        <form id="login_form" method="post" action="/subs/login/">
            {% csrf_token %}
 
-           <label for="id_username">Username:</label> <input type="text" name="username" value="" size="50" />
-           <br />
-           <label for="id_password">Password:</label><input type="password" name="password" value="" size="50" />
-           <br />
+           <p><label for="id_username">Username:</label> <input id="id_username" maxlength="30" name="username" type="text" /></p>
+           <p><label for="id_password">Password:</label> <input id="id_password" maxlength="30" name="password" type="password" /></p>
 
-           <button type="submit" name ="submit" class="btn btn-theme">Submit</button>
+            <button type="submit" name ="submit" class="btn btn-theme">Submit</button>
        </form>
     </div>
    </div><! --/row -->

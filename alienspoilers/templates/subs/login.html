@@ -13,12 +13,10 @@
   <form id="login_form" method="post" action="/subs/login/">
       {% csrf_token %}
 
-      <label for="id_username">Username:</label> <input type="text" name="username" value="" size="50" />
-      <br />
-      <label for="id_password">Password:</label><input type="password" name="password" value="" size="50" />
-      <br />
+      <p><label for="id_username">Username:</label> <input id="id_username" maxlength="30" name="username" type="text" /></p>
+      <p><label for="id_password">Password:</label> <input id="id_password" maxlength="30" name="password" type="password" /></p>
 
-      <input type="submit" value="submit" />
+       <button type="submit" name ="submit" class="btn btn-theme">Submit</button>
   </form>
 </div>
 {% endblock %}
