@@ -222,8 +222,10 @@ def create_event(request):
             event.save()
             # Update our variable to tell the template the event creation was successful.
             created = True
+            return index_render(request)
+
         except:
-            print "error occured while saving event"
+            print "ERROR occured while saving event"
             print sys.exc_info()[0]
             event_form = CreateEventForm()
             return render(request, 'subs/create_event.html',

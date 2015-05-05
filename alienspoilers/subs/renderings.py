@@ -35,8 +35,17 @@ def index_render(request):
 
     if request.method == 'POST':
         event_id = request.GET.get('id', '')
-        event = Event.objects.filter(creator = user, event_id = event_id)[0]
-        event.delete()
+        #print "event_id: ", event_id
+
+        '''events = Event.objects.filter(creator = user)
+        print events
+        for event in events:
+            print "   ", event.event_id, event.title
+        events = Event.objects.filter(event_id = event_id)
+        print events'''
+        event = Event.objects.filter(creator=user, event_id=event_id)
+        #print event[0]
+        event[0].delete()
 
     checkEvents(user)
 
@@ -49,5 +58,8 @@ def index_render(request):
             current_events.append(event)
         else:
             past_events.append(event)
+
+    '''print "current events: ", current_events
+    print "past events: ", past_events'''
 
     return render(request, 'subs/index.html', {'current_events': current_events, 'past_events': past_events})
